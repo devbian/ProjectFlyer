@@ -1,7 +1,3 @@
 # ProjectFlyer
-lesson 03 basic gulp housekeeping
-
-npm install
-
-use scss
+lesson 04-Initial Scaffolding and Routing
 
