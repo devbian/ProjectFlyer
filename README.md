@@ -1,8 +1,7 @@
 # ProjectFlyer
-!!do not clone this resp now. it is in learning...
+lesson 03 basic gulp housekeeping
 
-code based on laracasts flyer project
+npm install
 
-master branch will always be the newest code.
+use scss
 
-if wanna get code from sepecti lesson, just checkout branch
