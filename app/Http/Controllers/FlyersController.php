@@ -38,7 +38,7 @@ class FlyersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -49,7 +49,6 @@ class FlyersController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**

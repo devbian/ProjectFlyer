@@ -9,6 +9,5 @@
     <a href="/flyers/create" class="btn btn-primary">Create Flyer</a>
 
   </div>
-
 @stop
 
