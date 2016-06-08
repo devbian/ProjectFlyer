@@ -21,7 +21,12 @@
     </div>
 
     <div class="form-group">
-      <label for="country">Street:</label>
+      <label for="state">State:</label>
+      <input type="text" name="state" id="state" class="form-control" value="{{old('state')}}">
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country:</label>
       <select name="country" id="country" class="form-control">
         @foreach($countries::all() as $country=>$code)
           <option value="{{$code}}">{{$country}}</option>
