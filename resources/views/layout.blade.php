@@ -8,7 +8,7 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -26,6 +26,11 @@
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <p class="navbar-text pull-right">
+        @if($signed)
+          Hello, {{ $user->name }}
+        @endif
+      </p>
     </div><!--/.nav-collapse -->
   </div>
 </nav>

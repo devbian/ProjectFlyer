@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeFlyerRequest;
+use Auth;
 use App\Flyer;
 use App\Photo;
 use App\Http\Requests\FlyerRequest;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +20,8 @@ class FlyersController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['show']]);
+        parent::__construct();
     }
 
     /**
@@ -103,25 +105,36 @@ class FlyersController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param $zip
+     * @param $street
+     * @param ChangeFlyerRequest|Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function addPhoto($zip, $street, Request $request)
+    public function addPhoto($zip, $street, ChangeFlyerRequest $request)
     {
-        $this->validate($request, [
-            'photo' => 'required|mimes:jpg,jpeg,png,bmp'
-        ]);
-
         $photo = $this->makePhoto($request->file('photo'));
-
-        Flyer::locateAt($zip, $street)->addPhoto($photo);
-
+        $flyer = Flyer::locateAt($zip, $street);
+        $flyer->addPhoto($photo);
         return 'Done';
     }
 
 
-    public function makePhoto(UploadedFile $file)
+    public
+    function makePhoto(UploadedFile $file)
     {
         return Photo::named($file->getClientOriginalName())->move($file);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Symfony\Component\HttpFoundation\Response
+     */
+    public function unauthorized(Request $request)
+    {
+        if ($request->ajax()) {
+            return response(['message' => 'No way.'], 403);
+        }
+        flash('No way');
+        return redirect('/');
     }
 }
