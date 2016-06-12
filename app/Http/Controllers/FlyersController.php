@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FlyersController extends Controller
 {
@@ -18,7 +19,7 @@ class FlyersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -50,7 +51,6 @@ class FlyersController extends Controller
     public function store(FlyerRequest $request)
     {
         Flyer::create($request->all());
-        // flash message
         flash()->success('success', 'create flyer success');
         return redirect()->back();
     }
@@ -111,10 +111,17 @@ class FlyersController extends Controller
         $this->validate($request, [
             'photo' => 'required|mimes:jpg,jpeg,png,bmp'
         ]);
-        $photo = Photo::fromForm($request->file('photo'));
+
+        $photo = $this->makePhoto($request->file('photo'));
 
         Flyer::locateAt($zip, $street)->addPhoto($photo);
 
         return 'Done';
+    }
+
+
+    public function makePhoto(UploadedFile $file)
+    {
+        return Photo::named($file->getClientOriginalName())->move($file);
     }
 }

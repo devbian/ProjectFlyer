@@ -2,7 +2,6 @@
 {{ csrf_field() }}
 <div class="row">
   <div class="col-md-6">
-
     <div class="form-group">
       <label for="street">Street:</label>
       <input type="text" name="street" id="street" class="form-control" value="{{old('street')}}" required>
@@ -46,10 +45,10 @@
       </textarea>
     </div>
 
-    {{--<div class="form-group">--}}
-    {{--<label for="photos">Home Photos:</label>--}}
-    {{--<input type="file" name="photos" id="photos" class="form-control" value="{{old('photos')}}">--}}
-    {{--</div>--}}
+    <div class="form-group">
+      <label for="photos">Home Photos:</label>
+      <input type="file" name="photos" id="photos" class="form-control" value="{{old('photos')}}">
+    </div>
   </div>
 
   <hr>

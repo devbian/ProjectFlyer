@@ -29,7 +29,7 @@ class Flyer extends Model
      */
     public static function locateAt($zip, $street)
     {
-        return static::where(['zip' => $zip, 'street' => $street])->first();
+        return static::where(['zip' => $zip, 'street' => $street])->firstOrFail();
     }
 
     public function getPriceAttribute($price)
