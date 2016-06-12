@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class FlyersController extends Controller
 {
@@ -28,8 +29,6 @@ class FlyersController extends Controller
      */
     public function create()
     {
-//        flash('Welcome!', 'This is first artboard');
-        flash()->overlay('Hello', 'World');
         return view('flyers.create');
     }
 
@@ -43,17 +42,23 @@ class FlyersController extends Controller
     {
         Flyer::create($request->all());
         // flash message
+        flash()->success('success', 'create flyer success');
         return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param $zip
+     * @param $street
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function show($id)
+    public function show($zip, $street)
     {
+        $street = str_replace('-', ' ', $street);
+        $flyer = Flyer::locateAt($zip, $street)->first();
+        return view('flyers.show', compact('flyer'));
     }
 
     /**
@@ -87,6 +92,5 @@ class FlyersController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 }

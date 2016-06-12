@@ -20,6 +20,22 @@ class Flyer extends Model
         'price',
         'description'
     ];
+
+    /**
+     * @param $query
+     * @param string $zip
+     * @param string $street
+     * @return mixed
+     */
+    public function scopeLocateAt($query, $zip, $street)
+    {
+        return $query->where(['zip' => $zip, 'street' => $street]);
+    }
+
+    public function getPriceAttribute($price)
+    {
+        return '$'.number_format($price);
+    }
     
     /**
      * A flyer is composed of many photos

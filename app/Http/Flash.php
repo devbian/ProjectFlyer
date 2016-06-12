@@ -21,13 +21,13 @@ class Flash
     {
         $this->create($title, $message, 'error');
     }
-    
+
     public function success($title, $message)
     {
         $this->create($title, $message, 'success');
     }
-    
-    public function overlay($title, $message, $level='success')
+
+    public function overlay($title, $message, $level = 'success')
     {
         $this->create($title, $message, $level, 'flash_message_overlay');
     }
