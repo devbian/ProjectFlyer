@@ -11,7 +11,7 @@ class Flyer extends Model
      * fillable fields
      * @var array
      */
-    protected  $fillable=[
+    protected $fillable = [
         'street',
         'city',
         'state',
@@ -22,21 +22,30 @@ class Flyer extends Model
     ];
 
     /**
-     * @param $query
      * @param string $zip
      * @param string $street
      * @return mixed
+     * @internal param $query
      */
-    public function scopeLocateAt($query, $zip, $street)
+    public static function locateAt($zip, $street)
     {
-        return $query->where(['zip' => $zip, 'street' => $street]);
+        return static::where(['zip' => $zip, 'street' => $street])->first();
     }
 
     public function getPriceAttribute($price)
     {
-        return '$'.number_format($price);
+        return '$' . number_format($price);
     }
-    
+
+    /**
+     * attach photo model to flyers
+     * @param $photo
+     */
+    public function addPhoto($photo)
+    {
+        $this->photos()->save($photo);
+    }
+
     /**
      * A flyer is composed of many photos
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

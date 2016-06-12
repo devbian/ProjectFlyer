@@ -1,7 +1,10 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 @import "partials/form";
 
-body{
+body {
   padding-top: 50px;
+}
+
+img {
+  max-width: 100%;
 }

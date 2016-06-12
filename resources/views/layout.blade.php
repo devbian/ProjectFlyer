@@ -3,6 +3,7 @@
 <head>
   <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="/css/libs.css">
+  @yield('css')
 </head>
 
 <body>
@@ -37,7 +38,7 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="/js/libs.js"></script>
 
-@yield('script')
+@yield('scripts.footer')
 
 @include('flash')
 </body>

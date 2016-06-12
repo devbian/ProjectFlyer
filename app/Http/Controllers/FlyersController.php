@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Flyer;
+use App\Photo;
 use App\Http\Requests\FlyerRequest;
 use Illuminate\Http\Request;
 
@@ -57,7 +58,7 @@ class FlyersController extends Controller
     public function show($zip, $street)
     {
         $street = str_replace('-', ' ', $street);
-        $flyer = Flyer::locateAt($zip, $street)->first();
+        $flyer = Flyer::locateAt($zip, $street);
         return view('flyers.show', compact('flyer'));
     }
 
@@ -69,7 +70,6 @@ class FlyersController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -92,5 +92,21 @@ class FlyersController extends Controller
      */
     public function destroy($id)
     {
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function addPhoto($zip, $street, Request $request)
+    {
+        $this->validate($request, [
+            'photo' => 'required|mimes:jpg,jpeg,png,bmp'
+        ]);
+        $photo = Photo::fromForm($request->file('photo'));
+
+        Flyer::locateAt($zip, $street)->addPhoto($photo);
+
+        return 'Done';
     }
 }
