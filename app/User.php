@@ -11,8 +11,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+    AuthorizableContract,
+    CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
@@ -36,4 +36,25 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+
+    /**
+     * user's flyers
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flyers()
+    {
+        return $this->hasMany(Flyer::class);
+    }
+
+
+    /**
+     * attach flyer to user
+     * @param $flyer
+     * @return Model
+     */
+    public function publish($flyer)
+    {
+        return $this->flyers()->save($flyer);
+    }
 }

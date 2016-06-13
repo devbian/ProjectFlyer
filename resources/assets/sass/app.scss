@@ -1,2 +1,14 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "partials/form";
 
+body {
+  padding-top: 70px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.gallery_image{
+  margin-bottom: 1em;
+}
