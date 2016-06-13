@@ -6,7 +6,11 @@
       Use it as a starting point to create something more unique by building on or modifying it.
     </p>
 
-    <a href="/flyers/create" class="btn btn-primary">Create Flyer</a>
+    @if($signed)
+      <a href="/flyers/create" class="btn btn-primary">Create Flyer</a>
+    @else
+      <a href="/auth/register" class="btn btn-primary">Sign In</a>
+    @endif
 
   </div>
 @stop

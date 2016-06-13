@@ -40,10 +40,11 @@ class Flyer extends Model
     /**
      * attach photo model to flyers
      * @param $photo
+     * @return Photo Model
      */
     public function addPhoto($photo)
     {
-        $this->photos()->save($photo);
+        return $this->photos()->save($photo);
     }
 
     /**
