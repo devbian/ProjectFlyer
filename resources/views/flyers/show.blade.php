@@ -22,20 +22,19 @@
           @endforeach
         </div>
       @endforeach
+
+      {{-- deterime if has permisson to upload files --}}
+      @if($user && $flyer->ownedBy($user))
+        <hr>
+        <form id="addPhotosForm"
+              action="{{ route('store_photo_path', [$flyer->zip, $flyer->street]) }}"
+              class="dropzone"
+        >
+          {{ csrf_field() }}
+        </form>
+      @endif
     </div>
   </div>
-
-  <hr>
-
-  <h2>Add Your Photos</h2>
-
-  {{--<form id="addPhotosForm" action="/{{ $flyer->zip }}/{{ $flyer->street }}/photos" class="dropzone"--}}
-  <form id="addPhotosForm"
-        action="{{ route('store_photo_path', [$flyer->zip, $flyer->street]) }}"
-        class="dropzone"
-  >
-    {{ csrf_field() }}
-  </form>
 @stop
 
 @section('scripts.footer')

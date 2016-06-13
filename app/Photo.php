@@ -15,31 +15,72 @@ class Photo extends Model
     protected $baseDir = 'flyer/photos';
 
     /**
-     * load info from file
-     * @param $name
-     * @return mixed
-     * @internal param UploadedFile $file
+     * @var UploadedFile
      */
-    public static function named($name)
+    protected $file;
+
+    /**
+     * when photo model created, boot it
+     */
+    protected static function boot()
     {
-        $photo = (new static)->saveAs($name);
+        static::creating(function ($photo) {
+            $photo->upload();
+        });
+    }
+
+
+    /**
+     * Get photo instance from file
+     * @param UploadedFile $file
+     * @return static
+     */
+    public static function fromFile(UploadedFile $file)
+    {
+        $photo = new static;
+
+        $photo->file = $file;
+
+        $photo->fill([
+            'name' => $photo->fileName(),
+            'path' => $photo->filePath(),
+            'thumbnail_path' => $photo->thumbnailPath()
+        ]);
         return $photo;
     }
 
-    protected function saveAs($name)
+    public function fileName()
     {
-        $this->name = sprintf("%s-%s", time(), $name);
-        $this->path = sprintf("%s/%s", $this->baseDir, $this->name);
-        $this->thumbnail_path = sprintf("%s/tn-%s", $this->baseDir, $this->name);
-        return $this;
+        $name = sha1(time() . $this->file->getClientOriginalName());
+        $extention = $this->fileExtention();
+        return "{$name}.{$extention}";
     }
 
-    public function move(UploadedFile $file)
+    public function filePath()
     {
-        $file->move($this->baseDir, $this->name);
-        Image::make($this->path)
+        return $this->baseDir . '/' . $this->fileName();
+    }
+
+    public function thumbnailPath()
+    {
+        return $this->baseDir . '/tn-' . $this->fileName();
+    }
+
+    public function fileExtention()
+    {
+        return $this->file->getClientOriginalExtension();
+    }
+
+    /**
+     * upload file and return this instance
+     * @return $this
+     */
+    public function upload()
+    {
+        $this->file->move($this->baseDir, $this->fileName());
+        Image::make($this->filePath())
             ->fit(200)
-            ->save($this->thumbnail_path);
+            ->save($this->thumbnailPath());
         return $this;
     }
 
