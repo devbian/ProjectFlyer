@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Image;
+use File;
 
 class Photo extends Model
 {
@@ -32,5 +33,20 @@ class Photo extends Model
     public function flyer()
     {
         return $this->belongsTo(Flyer::class);
+    }
+
+
+    /**
+     * delete photo in disk and delete it from db
+     * @throws \Exception
+     */
+    public function delete()
+    {
+        File::delete([
+            $this->path,
+            $this->thumbnail_path
+        ]);
+
+        parent::delete();
     }
 }
