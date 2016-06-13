@@ -17,11 +17,7 @@
         <div class="row">
           @foreach($set as $photo)
             <div class="col-md-3">
-              <form action="/photos/{{ $photo->id }}" method="POST">
-                {{ csrf_field() }}
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" class="btn btn-sm">Delete</button>
-              </form>
+              {!! link_to('Delete it', "/photos/$photo->id", 'DELETE') !!}
               <a href="/{{ $photo->path }}" data-lity>
                 <img src="/{{ $photo->thumbnail_path }}" alt="" class="gallery_image">
               </a>
