@@ -1,3 +1,5 @@
 # ProjectFlyer
-lesson 04-Initial Scaffolding and Routing
+Checkout brahch for lesson
+
+[Code Base On This Lesson](https://laracasts.com/series/build-project-flyer-with-me)	
 
